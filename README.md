@@ -38,22 +38,27 @@ Timer (to give user time to open the door once moves have been completed)
 
 **Code:**
 
-If Input1 on High (meaning circut complete) set `Move1` to True
-	If Input1 goes Low, flip `Move1` back to False
-If Input2 on High and `Move1` equals True, set `Move2` to True
-	If Input1 goes Low, flip `Move2` back to False
-If Input3 on High and `Move1/Move2` equal True, set `Move3` to True
-	If Input1 goes Low, flip `Move3` back to False
-If Input4 on High and `Move1/Move2/Move3` equal True, set `Move4` to True
+```
+- If Input1 on High (meaning circut complete) set `Move1` to True
+  If Input1 goes Low, flip `Move1` back to False
+		
+- If Input2 on High and `Move1` equals True, set `Move2` to True
+  If Input1 goes Low, flip `Move2` back to False
 
-If `Move1/Move2/Move3/Move4` equal to True, set `Unlock` to True
-	Signal the solenoid to unlock
+- If Input3 on High and `Move1/Move2` equal True, set `Move3` to True
+  If Input1 goes Low, flip `Move3` back to False
 
-Start check on inputs for low signals (meaning pieces in original place), once every five seconds
-	If safe has been open 75 plus seconds, remind user with beep or LED flash
+- If Input4 on High and `Move1/Move2/Move3` equal True, set `Move4` to True
+
+- If `Move1/Move2/Move3/Move4` equal to True, set `Unlock` to True
+  Signal the solenoid to unlock
+
+- Start check on inputs for low signals (meaning pieces in original place), once every five seconds
+  If safe has been open 75 plus seconds, remind user with beep or LED flash
   
-If all 4 Inputs register low, set `Unlock` to False
-	Make lock warning beep/LED flash
-	Send signal to solenoid to lock
+- If all 4 Inputs register low, set `Unlock` to False.
+  Make lock warning beep/LED flash
+  Send signal to solenoid to lock
   
-Wait 5 seconds, begin input checks again
+- Wait 5 seconds, begin input checks again
+```
