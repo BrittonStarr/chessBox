@@ -29,4 +29,31 @@ https://www.ebay.com/itm/12V-Electronic-Latch-Lock-Catch-Door-Gate-Electric-Rele
 
 ## Psuedocode
 
+**Overview:**
+This project will require moving 4 specific chess pieces to particular spaces, in a specific order. It is my belief this offers a sufficient complexity of moves to add security. The math is approximately 20x20x48x48 for roughly 920,000 combinations translating to more than an order of magnitude above a standard combination lock. If the correct sequence is made, the arduino will send a signal to the solenoid, thereby opening the box. The following is the psuedocode to make that happen.
 
+**Variables:**
+`Move1` `Move2` `Move3` `Move4` `Unlock`
+Timer (to give user time to open the door once moves have been completed)
+
+**Code:**
+
+If Input1 on High (meaning circut complete) set `Move1` to True
+	If Input1 goes Low, flip `Move1` back to False
+If Input2 on High and `Move1` equals True, set `Move2` to True
+	If Input1 goes Low, flip `Move2` back to False
+If Input3 on High and `Move1/Move2` equal True, set `Move3` to True
+	If Input1 goes Low, flip `Move3` back to False
+If Input4 on High and `Move1/Move2/Move3` equal True, set `Move4` to True
+
+If `Move1/Move2/Move3/Move4` equal to True, set `Unlock` to True
+	Signal the solenoid to unlock
+
+Start check on inputs for low signals (meaning pieces in original place), once every five seconds
+	If safe has been open 75 plus seconds, remind user with beep or LED flash
+  
+If all 4 Inputs register low, set `Unlock` to False
+	Make lock warning beep/LED flash
+	Send signal to solenoid to lock
+  
+Wait 5 seconds, begin input checks again
